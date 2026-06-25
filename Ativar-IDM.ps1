@@ -30,45 +30,43 @@ Write-Host ""
 
 New-Item -ItemType Directory -Path $dir -Force | Out-Null
 
-# --- Etapa 1: Baixar e instalar IDM ---
-Write-Host "[1/5] Buscando ultima versao do IDM..." -ForegroundColor Yellow
+# --- Etapa 1: Instalar IDM ---
+$wingetAvailable = Get-Command winget -ErrorAction SilentlyContinue
 
-$downloadPage = Invoke-WebRequest -Uri "https://www.internetdownloadmanager.com/download.html" -UseBasicParsing
-$idmUrl = ($downloadPage.Links | Where-Object { $_.href -match "download\.internetdownloadmanager\.com/idman.*\.exe" } | Select-Object -First 1).href
+if ($wingetAvailable) {
+    Write-Host "[1/4] Instalando IDM via winget..." -ForegroundColor Yellow
+    winget install --id Tonec.InternetDownloadManager --silent --accept-package-agreements --accept-source-agreements --force
+} else {
+    Write-Host "[1/4] winget nao encontrado. Baixando instalador direto..." -ForegroundColor Yellow
 
-if (-not $idmUrl) {
-    # Fallback: extrair via regex do HTML bruto
+    $downloadPage = Invoke-WebRequest -Uri "https://www.internetdownloadmanager.com/download.html" -UseBasicParsing
     $idmUrl = [regex]::Match($downloadPage.Content, 'https?://download\.internetdownloadmanager\.com/idman[^"]+\.exe').Value
+
+    if (-not $idmUrl) {
+        Write-Host "Nao foi possivel obter a URL do instalador. Verifique sua conexao." -ForegroundColor Red
+        Read-Host "Pressione Enter para fechar"
+        exit 1
+    }
+
+    Write-Host "    Baixando de: $idmUrl" -ForegroundColor Yellow
+    $installer = "$dir\idm_setup.exe"
+    Invoke-WebRequest -Uri $idmUrl -OutFile $installer -UseBasicParsing
+
+    Write-Host "    Instalando com /skipdlgs..." -ForegroundColor Yellow
+    Start-Process -FilePath $installer -ArgumentList "/skipdlgs" -Wait
 }
 
-if (-not $idmUrl) {
-    Write-Host "Nao foi possivel obter a URL do instalador. Verifique sua conexao." -ForegroundColor Red
-    Read-Host "Pressione Enter para fechar"
-    exit 1
-}
-
-Write-Host "[2/5] Baixando IDM de: $idmUrl" -ForegroundColor Yellow
-$installer = "$dir\idm_setup.exe"
-Invoke-WebRequest -Uri $idmUrl -OutFile $installer -UseBasicParsing
-
-Write-Host "[3/5] Instalando IDM silenciosamente..." -ForegroundColor Yellow
-$proc = Start-Process -FilePath $installer -ArgumentList "/skipdlgs /VERYSILENT /SUPPRESSMSGBOXES /NORESTART /SP-" -Wait -PassThru
-if ($proc.ExitCode -ne 0) {
-    Write-Host "Aviso: instalador retornou codigo $($proc.ExitCode). Continuando com ativacao..." -ForegroundColor Yellow
-}
-
-# Aguardar o IDM terminar de configurar (pode abrir brevemente)
-Start-Sleep -Seconds 3
-
-# Fechar janela do IDM se estiver aberta
+Start-Sleep -Seconds 2
 Stop-Process -Name "IDMan" -ErrorAction SilentlyContinue
 
 # --- Etapa 2: Ativar IDM ---
-Write-Host "[4/5] Baixando IAS.cmd..." -ForegroundColor Yellow
+Write-Host "[2/4] Baixando IAS.cmd..." -ForegroundColor Yellow
 Invoke-WebRequest -Uri "$repoUrl/IAS.cmd" -OutFile $ias -UseBasicParsing
 
-Write-Host "[5/5] Ativando IDM..." -ForegroundColor Yellow
+Write-Host "[3/4] Redefinindo estado anterior..." -ForegroundColor Yellow
 cmd /c "`"$ias`" /res /silent"
+
+Write-Host "[4/4] Ativando IDM..." -ForegroundColor Yellow
 cmd /c "`"$ias`" /act /silent"
 $code = $LASTEXITCODE
 
