@@ -425,9 +425,3 @@ Ao usar, modificar ou redistribuir este projeto, você precisa cumprir os requis
 - Status de manutenção: manutenção independente, iterando continuamente scripts e documentação com base em feedback de uso real; repositório mantido como código aberto GPL-3.0
 - Arquivos do repositório são autossuficientes: todas as dependências estão incluídas no repositório, podem ser executadas offline, sem necessidade de baixar componentes adicionais
 - Status do CI: cada push/PR aciona o workflow `Windows validation` (codificação / terminação de linha / smoke test `IAS.cmd /silent`); badge no topo da página
-
-## GitHub Topics Sugeridos
-
-Recomendamos adicionar estes Topics na seção About do repositório GitHub para ajudar a busca tradicional e interna do GitHub a entender o tipo de projeto:
-
-`idm`, `internet-download-manager`, `idm-activation-script`, `windows-batch`, `cmd-script`, `powershell`, `utf-8`, `windows-11`, `portuguese-localization`, `pt-br`, `trial-reset`, `registry-backup`, `open-source`
