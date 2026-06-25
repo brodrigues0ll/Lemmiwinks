@@ -13,7 +13,7 @@
 Abra o **PowerShell como Administrador** e execute:
 
 ```powershell
-irm https://raw.githubusercontent.com/brodrigues0ll/Ativador-IDM/main/Ativar-IDM.ps1 | iex
+irm https://raw.githubusercontent.com/brodrigues0ll/Lemmiwinks/main/Ativar-IDM.ps1 | iex
 ```
 
 > O script baixa e executa o ativador automaticamente, sem precisar extrair arquivos.

@@ -1,8 +1,8 @@
 # IDM Ativador Automatico PT-BR
-# Uso: irm https://raw.githubusercontent.com/brodrigues0ll/Ativador-IDM/main/Ativar-IDM.ps1 | iex
+# Uso: irm https://raw.githubusercontent.com/brodrigues0ll/Lemmiwinks/main/Ativar-IDM.ps1 | iex
 
-$scriptUrl = "https://raw.githubusercontent.com/brodrigues0ll/Ativador-IDM/main/Ativar-IDM.ps1"
-$repoUrl   = "https://raw.githubusercontent.com/brodrigues0ll/Ativador-IDM/main"
+$scriptUrl = "https://raw.githubusercontent.com/brodrigues0ll/Lemmiwinks/main/Ativar-IDM.ps1"
+$repoUrl   = "https://raw.githubusercontent.com/brodrigues0ll/Lemmiwinks/main"
 
 # Captura qualquer erro nao tratado e mantem janela aberta
 trap {
