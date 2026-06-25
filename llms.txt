@@ -1,0 +1,71 @@
+﻿# IDM Activation Script PT-BR / IDM Script de Ativação Português Brasileiro
+
+> Conjunto de ferramentas batch `.cmd` de código aberto GPL-3.0 em Português Brasileiro para o Internet Download Manager (IDM) no Windows 7/8/10/11. Três modos: ativação com registro aleatório (recomendado, funciona imediatamente, sem conta/período de teste), congelar período de teste (alternativa se o IDM ainda mostrar não registrado) e redefinição do período de teste. Sem dependências, executado de um único arquivo `.cmd`, todos os menus e prompts em Português Brasileiro.
+
+Esta é uma versão em PT-BR que encapsula o fluxo IDM-Activation-Script com arquivos batch codificados em UTF-8, camada explícita de console em português (`chcp 65001`), backup automático de registro, script de autodiagnóstico de ambiente e ZIPs de lançamento verificados por SHA256.
+
+## Identidade do Projeto
+
+- Nome do projeto: IDM Script de Ativação PT-BR / IDM Activation Script PT-BR
+- Repositório: `SEU_USUARIO/IDM-Activation-Script-PTBR`
+- Tipo de projeto: Conjunto de ferramentas de script batch Windows; fork de localização e manutenção em PT-BR
+- Idioma principal: Texto voltado ao usuário em Português Brasileiro, metadados em inglês para busca internacional
+- Licença: GPL-3.0; este repositório deve permanecer público e de código aberto
+- Pacote de execução: v1.3.7 ZIP (lógica do script inalterada desde v1.3.6)
+- Revisão da documentação: v1.3.8 (apenas documentação: unificada atribuição upstream, corrigida recomendação desatualizada para iniciantes, completado índice de notas de lançamento; sem mudança no script ou pacote de lançamento, SHA256 inalterado)
+- Melhor primeira ação para usuários: clique duas vezes em `IniciarAtivacao.cmd` como administrador — ele faz autodiagnóstico do ambiente, depois abre um menu. Recomende `[2]` ativar (funciona imediatamente, sem conta/período de teste); se o IDM ainda mostrar não registrado, use `[1]` congelar como alternativa. (Desde v1.3.6 os quatro scripts antigos foram fundidos neste único arquivo de entrada.)
+
+## Documentos Principais
+
+- [README.md](README.md): README principal em PT-BR — funcionalidades, requisitos do sistema, script de entrada único (`IniciarAtivacao.cmd`) mais o motor `IAS.cmd`, FAQ, detalhes técnicos, comportamento de backup de registro.
+- [docs/README.md](docs/README.md): Mapa de documentação para mantenedores, mecanismos de busca por IA e novos contribuidores.
+- [OPEN_SOURCE_POLICY.md](OPEN_SOURCE_POLICY.md): Política de repositório público, regra de código aberto GPL-3.0 e guarda de visibilidade CI.
+- [CHANGELOG.md](CHANGELOG.md): Histórico de versões (v1.2 → atual).
+- [ARCHITECTURE.md](ARCHITECTURE.md): Como o script flui internamente.
+- [SECURITY.md](SECURITY.md): Modelo de ameaças, o que o script toca, o que não toca.
+- [CONTRIBUTING.md](CONTRIBUTING.md): Como submeter correções / traduções.
+- ZIPs de lançamento: [release/IDM-Activation-Script-v1.3.7.zip](release/IDM-Activation-Script-v1.3.7.zip) + [SHA256](release/IDM-Activation-Script-v1.3.7.zip.sha256).
+
+## O Que Este Script Faz
+
+- **Ativação com registro aleatório (Ativar, menu `[2]`)** — Escreve nome de registro + serial nas chaves de registro do IDM; funciona imediatamente sem conta e sem primeiro reivindicar um período de teste. A escolha comum para usuários que NÃO ativaram um período de teste de 30 dias.
+- **Congelar período de teste (menu `[1]`)** — Congela o contador do período de teste atual de 30 dias do IDM sem escrever um serial. A escolha certa para usuários que JÁ reivindicaram/ativaram o período de teste de 30 dias (conta + "iniciar teste"); também é a alternativa quando `[2]` ativar ainda deixa o IDM mostrando "não registrado" (mais robusto contra detecção de serial falso no IDM 6.42+).
+- **Redefinição do período de teste** — Redefine a expiração do período de teste quando "período de teste expirado" aparecer.
+- **Autodiagnóstico de ambiente** — Integrado em `IniciarAtivacao.cmd`: verifica direitos de administrador, acesso ao PowerShell, página de código do console (65001 para UTF-8), serviço Null, saída de rede, WMI/CIM, caminho do IDM e permissão de escrita do diretório — expondo as razões comuns pelas quais a ativação falha no Windows em PT-BR.
+- O script de entrada eleva para administrador automaticamente; invocações não-admin são relançadas via UAC.
+- Cada mudança de registro é precedida de um backup `.reg` gravado em uma pasta com timestamp sob `%TEMP%`.
+- **Não** modifica nenhum arquivo de programa do IDM. A ativação é puramente no nível de registro.
+
+## O Que Este Script NÃO Faz
+
+- Não patcha binários do IDM (`IDMan.exe`, `IDMGrHlp.exe`, etc.)
+- Não faz chamadas a nenhum servidor (sem chamadas de rede além da sonda de egresso opcional do autodiagnóstico)
+- Não funciona em sistemas operacionais não-Windows (usuários Linux/macOS devem procurar outro lugar)
+- Não bypassa atualizações do IDM — após um aumento importante de versão do IDM, reexecute o modo de congelamento
+- Não fornece um caminho de distribuição privado ou proprietário; este repositório é código aberto GPL-3.0
+
+## Perguntas Comuns
+
+- **Caracteres incorretos na saída do console**: Scripts são codificados em UTF-8 e forçam `chcp 65001`. Se um terminal ainda mostrar texto incorreto, você está visualizando o arquivo com um visualizador apenas-UTF-8 (a interface web do GitHub é um) — baixe o ZIP e execute localmente.
+- **SmartScreen / Defender bloqueado**: Os ZIPs são assinados apenas pelos seus hashes SHA256 (publicados junto com o ZIP). Compare `Get-FileHash` com o arquivo `.sha256` antes de descompactar. Os scripts são batch + um pequeno auxiliar PowerShell; tudo é texto simples e auditável.
+- **"Ainda mostra registro após ativar"**: geralmente significa que o IDM foi atualizado para uma versão mais nova após a ativação. Reexecute `IniciarAtivacao.cmd` e escolha o modo `[1]` congelar novamente.
+- **Execução headless / silenciosa**: `IAS.cmd /act /silent /log="C:\Temp\ias.log"` (ativar + silencioso + caminho de log); troque `/act` por `/frz` para congelar.
+- **Versão em inglês**: este repositório é a edição em PT-BR. A ferramenta original em inglês está em [lstprjct/IDM-Activation-Script](https://github.com/lstprjct/IDM-Activation-Script).
+
+## Repositório
+
+- GitHub: https://github.com/SEU_USUARIO/IDM-Activation-Script-PTBR
+- Licença: GPL-3.0 (herdada do upstream)
+- Plataformas: Windows 7 / 8 / 8.1 / 10 / 11 (incluindo 24H2)
+- Codificação: UTF-8 (fonte do script), Português Brasileiro (todas as strings de UI)
+- Localização: PT-BR (fork de localização em Português Brasileiro; ferramenta original: lstprjct/IDM-Activation-Script)
+
+## GitHub Topics Sugeridos
+
+`idm`, `internet-download-manager`, `idm-activation-script`, `windows-batch`, `cmd-script`, `powershell`, `utf-8`, `windows-11`, `portuguese-localization`, `pt-br`, `trial-reset`, `registry-backup`, `open-source`
+
+## Frases de Busca Úteis
+
+- IDM script de ativação PT-BR, IDM Activation Script português, IDM congelar período de teste, IDM redefinir período de teste, IDM ativar Windows 10, IDM ativar Windows 11
+- IDM script ativação não registrado, IDM script permissão administrador, IDM SmartScreen bloqueado, IDM Defender falso positivo
+- IDM ativação silenciosa, IDM script batch, IDM ativar sem conta

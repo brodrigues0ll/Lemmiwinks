@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Leia primeiro as Perguntas Frequentes (README FAQ)
+    url: https://github.com/SEU_USUARIO/IDM-Activation-Script-PTBR#perguntas-frequentes
+    about: Permissões de administrador, IDM não instalado, caracteres incorretos, rede, política do PowerShell, Win11 24H2, bloqueio do Defender e a maioria dos problemas já têm respostas.
+  - name: Histórico completo de versões
+    url: https://github.com/SEU_USUARIO/IDM-Activation-Script-PTBR/blob/main/CHANGELOG.md
+    about: Se você encontrou um novo problema após uma determinada versão, primeiro compare com o CHANGELOG.md para ver se é uma mudança conhecida.
+  - name: Vulnerabilidade de Segurança (Não submeta publicamente)
+    url: https://github.com/SEU_USUARIO/IDM-Activation-Script-PTBR/security/advisories/new
+    about: Problemas de segurança devem ser reportados pelo canal privado GitHub Security Advisory, veja SECURITY.md.

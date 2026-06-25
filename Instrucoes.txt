@@ -1,0 +1,47 @@
+﻿IDM Script de Ativacao - Instrucoes de Uso
+==========================================
+
+[USO MAIS SIMPLES]
+  1. Extraia o arquivo compactado para uma pasta comum
+     (Nao coloque em Arquivos de Programas, nem abra diretamente dentro do arquivo compactado).
+  2. Clique duas vezes em   IniciarAtivacao.cmd
+  3. Quando aparecer a janela de confirmacao, clique em "Sim" (conceder permissoes de administrador).
+  4. O script fara automaticamente uma verificacao do ambiente e exibira um menu,
+     use o teclado para digitar o numero da opcao (veja abaixo "Qual escolher"):
+        [2] Ativar
+        [1] Ativar (Congelar)
+        [3] Redefinir Ativacao / Periodo de Teste
+  5. Siga as instrucoes na tela para concluir.
+
+[ESCOLHER [2] OU [1]? Veja seu estado atual]
+  - Nao usou o periodo de teste de 30 dias / Quer usar o IDM diretamente  -> Escolha [2] Ativar (mais comum, recomendado).
+        Escreve as informacoes de registro e esta pronto para usar imediatamente,
+        sem necessidade de conta ou periodo de teste.
+  - Ja ativou e esta usando o periodo de teste de 30 dias (tem conta, clicou em "Iniciar teste") -> Escolha [1] Congelar.
+        Congelar significa fixar o periodo de teste atual para que nao expire.
+  - Se apos escolher [2] Ativar o IDM ainda mostrar "nao registrado"  -> Mude para [1] Congelar como alternativa.
+        Congelar nao grava numero de serie, sendo mais resistente a deteccao de "serial falso"
+        nas versoes mais recentes do IDM (6.42+).
+
+[O QUE HA NA PASTA]
+  IniciarAtivacao.cmd ... O programa principal que voce clica duas vezes (verifica o ambiente, depois exibe o menu de ativacao)
+  IAS.cmd             ... O motor principal, chamado pelo arquivo acima, geralmente nao precisa ser executado separadamente
+  Instrucoes.txt      ... Este arquivo
+
+[SITUACOES COMUNS NA PRIMEIRA EXECUCAO (sao avisos do sistema, nao problemas do script)]
+  - UAC Controle de Conta de Usuario: Clique em "Sim" para obter permissoes de administrador.
+  - SmartScreen exibe "Bloqueado": Clique em "Mais informacoes" -> "Executar mesmo assim".
+  - Antivirus / Defender detecta ameaca: O script precisa gravar no registro, o que pode gerar falsos positivos.
+    Voce pode adicionar a pasta a lista de exclusoes ou desativar temporariamente antes de executar.
+    Se os arquivos da pasta extraida desaparecerem, provavelmente foram removidos pelo antivirus;
+    o valor SHA256 esta publicado no repositorio para verificacao.
+  - Arquivo "bloqueado": Clique com o botao direito em IniciarAtivacao.cmd -> Propriedades -> marque "Desbloquear".
+
+[USO AVANCADO (linha de comando / nao assistido, opcional)]
+  Abra o CMD como administrador e execute:
+     IAS.cmd /act /silent /log="C:\Temp\ias.log"
+  /act=Ativar (recomendado)  /frz=Congelar  /res=Redefinir; adicione /silent para modo silencioso, codigo de saida 0 em caso de sucesso.
+
+[MAIS AJUDA / REPORTAR PROBLEMAS]
+  https://github.com/SEU_USUARIO/IDM-Activation-Script-PTBR/issues
+  Ao reportar, anexe a saida de "Verificacao de Ambiente" do IniciarAtivacao.cmd para agilizar o diagnostico.

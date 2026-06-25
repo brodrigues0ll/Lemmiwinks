@@ -1,0 +1,76 @@
+name: Ajuda de Uso / Dúvida de Iniciante
+description: Não tenho certeza se é um bug, apenas não sei usar ou travei em algum passo
+title: "[Ajuda] "
+labels: ["question", "help wanted"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Este modelo é para a situação de "não estou reportando um bug, apenas não sei usar" ou "travei em algum passo".
+        Antes de começar, **recomendamos fortemente abrir o FAQ do README (P1–P10) e dar uma olhada** — muitos problemas comuns já têm respostas lá.
+
+  - type: dropdown
+    id: stuck-step
+    attributes:
+      label: Em qual passo você travou?
+      options:
+        - Fase de download/extração
+        - Fase de autodiagnóstico de ambiente do "IniciarAtivacao.cmd"
+        - Clicar duas vezes em "IniciarAtivacao.cmd" sem resposta / fecha rapidamente
+        - Nada acontece após clicar Sim na janela UAC
+        - Bloqueio pelo Windows SmartScreen / Defender
+        - Script de ativação travou no meio
+        - Ativação bem-sucedida mas IDM ainda mostra aviso de registro
+        - Outro (descreva na área de descrição)
+    validations:
+      required: true
+
+  - type: input
+    id: os-version
+    attributes:
+      label: Versão do Windows
+      description: Não sabe como ver? Pressione Win+R, digite winver, pressione Enter.
+      placeholder: "Windows 11 23H2 / Windows 10 22H2 / ..."
+    validations:
+      required: true
+
+  - type: input
+    id: idm-version
+    attributes:
+      label: Versão do IDM (se instalado)
+      description: Abra o IDM → Ajuda → Sobre
+      placeholder: "6.42 build 10 / Não instalado / Não tenho certeza"
+
+  - type: textarea
+    id: desc
+    attributes:
+      label: Descrição Detalhada
+      description: |
+        Descreva claramente o que você fez, o que esperava e o que realmente aconteceu.
+        **Pode colar capturas de tela diretamente aqui** (o GitHub irá fazer upload automaticamente).
+      placeholder: |
+        Por exemplo:
+        Cliquei duas vezes em "IniciarAtivacao.cmd", a janela piscou e fechou.
+        Tentei executar como administrador conforme o README diz, mas ainda fecha rapidamente.
+    validations:
+      required: true
+
+  - type: textarea
+    id: tried
+    attributes:
+      label: O que você já tentou (opcional)
+      placeholder: |
+        Por exemplo:
+        - Executei "IniciarAtivacao.cmd", o resultado do autodiagnóstico foi ...
+        - Olhei o FAQ P1–P3, não encontrei correspondência
+        - Tentei novamente após reiniciar o computador, ainda igual
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Verificação rápida
+      options:
+        - label: Pesquisei nas "Perguntas Frequentes" do README e não encontrei a resposta
+          required: true
+        - label: Executei como administrador (ou pelo menos tentei)
+          required: true

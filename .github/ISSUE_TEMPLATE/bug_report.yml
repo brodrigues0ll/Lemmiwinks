@@ -1,0 +1,112 @@
+name: Relato de Bug
+description: Reportar anomalias de execução do script, caracteres incorretos, falha na ativação e outros problemas
+title: "[Bug] "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Obrigado por reportar o problema. **Antes de submeter, por favor execute uma vez `IniciarAtivacao.cmd` como administrador**, cole a saída completa do "autodiagnóstico de ambiente" antes de entrar no menu — isso reduz muito o tempo de diagnóstico.
+
+  - type: input
+    id: os-version
+    attributes:
+      label: Versão do Windows
+      description: Execute `ver` no CMD para obter, por exemplo `Microsoft Windows [Version 10.0.22631.3593]`
+      placeholder: "Microsoft Windows [Version 10.0.22631.3593]"
+    validations:
+      required: true
+
+  - type: input
+    id: idm-version
+    attributes:
+      label: Versão do IDM
+      description: Abra o IDM → Ajuda → Sobre, ou leia no registro `HKCU\Software\DownloadManager\version`
+      placeholder: "6.42 build 10"
+    validations:
+      required: true
+
+  - type: input
+    id: script-version
+    attributes:
+      label: Versão do Script
+      description: Veja `@set iasver=...` na primeira linha de `IAS.cmd`
+      placeholder: "1.3.6"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: run-mode
+    attributes:
+      label: Comando / Ponto de entrada executado
+      options:
+        - IniciarAtivacao.cmd → Menu [1] Ativar (Congelar)
+        - IniciarAtivacao.cmd → Menu [2] Ativar
+        - IniciarAtivacao.cmd → Menu [3] Redefinir
+        - IAS.cmd interação pelo menu
+        - IAS.cmd /frz
+        - IAS.cmd /act
+        - IAS.cmd /res
+        - IAS.cmd + /silent + /log
+        - Outro (descreva na área de descrição)
+    validations:
+      required: true
+
+  - type: textarea
+    id: smoke-output
+    attributes:
+      label: Saída do autodiagnóstico do IniciarAtivacao.cmd
+      description: |
+        Execute `IniciarAtivacao.cmd` **como administrador**, cole toda a saída da tela do "autodiagnóstico de ambiente" antes de entrar no menu abaixo.
+        Se não conseguir executar, descreva onde ficou travado.
+      render: text
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Passos para Reproduzir
+      description: Por favor descreva em pontos numerados 1 / 2 / 3, quanto mais detalhado melhor
+      placeholder: |
+        1. Clicar duas vezes em `IniciarAtivacao.cmd` como administrador
+        2. ...
+        3. ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Resultado Esperado
+      placeholder: Por exemplo: ativação por congelamento bem-sucedida, IDM não mostra mais aviso de registro ao abrir
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: Resultado Real
+      description: Anexe saída do script, mensagens de erro, capturas de tela (imagens podem ser coladas diretamente)
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Log de execução (opcional)
+      description: |
+        Se usou `/log="C:\Temp\ias.log"` para gravar log, por favor cole o conteúdo do log aqui (recomenda-se remover caminhos/nomes de usuário sensíveis).
+      render: text
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Autovalidação antes de submeter
+      options:
+        - label: Li a seção "Perguntas Frequentes" do README e o problema não está coberto
+          required: true
+        - label: Executei `IniciarAtivacao.cmd` como administrador e inclui a saída do autodiagnóstico
+          required: true
+        - label: Confirmei que não incluí nenhuma senha, chave de licença ou outras informações sensíveis no Issue
+          required: true
