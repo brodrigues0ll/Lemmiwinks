@@ -6,7 +6,7 @@ $repoUrl = "https://raw.githubusercontent.com/SEU_USUARIO/IDM-Activation-Script-
 # Solicitar permissoes de administrador se necessario
 if (!([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]"Administrator")) {
     Write-Host "Solicitando permissoes de administrador..." -ForegroundColor Yellow
-    Start-Process powershell.exe -ArgumentList "-NoProfile -ExecutionPolicy Bypass -Command `"irm '$repoUrl/Ativar-IDM.ps1' | iex`"" -Verb RunAs -Wait
+    Start-Process powershell.exe -ArgumentList "-NoProfile -NoExit -ExecutionPolicy Bypass -Command `"irm '$repoUrl/Ativar-IDM.ps1' | iex`"" -Verb RunAs
     exit
 }
 
@@ -25,12 +25,16 @@ Write-Host "[1/3] Baixando script..." -ForegroundColor Yellow
 try {
     Invoke-WebRequest -Uri "$repoUrl/IAS.cmd" -OutFile $ias -UseBasicParsing
 } catch {
+    Write-Host ""
     Write-Host "Erro ao baixar IAS.cmd: $_" -ForegroundColor Red
+    Write-Host "Verifique se o repositorio esta publico e o usuario esta correto." -ForegroundColor Red
+    Read-Host "`nPressione Enter para fechar"
     exit 1
 }
 
 if (!(Test-Path $ias)) {
     Write-Host "Erro: IAS.cmd nao encontrado apos download." -ForegroundColor Red
+    Read-Host "`nPressione Enter para fechar"
     exit 1
 }
 
@@ -45,8 +49,11 @@ Write-Host ""
 if ($exitCode -eq 0) {
     Write-Host "IDM ativado com sucesso!" -ForegroundColor Green
 } else {
-    Write-Host "Ativacao encerrou com codigo $exitCode - verifique se o IDM esta instalado." -ForegroundColor Red
+    Write-Host "Ativacao encerrou com codigo $exitCode." -ForegroundColor Red
+    Write-Host "Verifique se o IDM esta instalado corretamente." -ForegroundColor Red
 }
-Write-Host ""
 
 Remove-Item -Path $dir -Recurse -Force -ErrorAction SilentlyContinue
+
+Write-Host ""
+Read-Host "Pressione Enter para fechar"
