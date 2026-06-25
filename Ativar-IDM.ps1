@@ -52,7 +52,7 @@ $installer = "$dir\idm_setup.exe"
 Invoke-WebRequest -Uri $idmUrl -OutFile $installer -UseBasicParsing
 
 Write-Host "[3/5] Instalando IDM silenciosamente..." -ForegroundColor Yellow
-$proc = Start-Process -FilePath $installer -ArgumentList "/silent /nodesktop" -Wait -PassThru
+$proc = Start-Process -FilePath $installer -ArgumentList "/S" -Wait -PassThru
 if ($proc.ExitCode -ne 0) {
     Write-Host "Aviso: instalador retornou codigo $($proc.ExitCode). Continuando com ativacao..." -ForegroundColor Yellow
 }
