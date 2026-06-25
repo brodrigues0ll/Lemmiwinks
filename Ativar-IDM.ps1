@@ -1,12 +1,12 @@
 # IDM Ativador Automatico PT-BR
-# Uso: irm https://raw.githubusercontent.com/SEU_USUARIO/IDM-Activation-Script-PTBR/main/Ativar-IDM.ps1 | iex
+# Uso: irm https://raw.githubusercontent.com/brodrigues0ll/Ativador-IDM/main/Ativar-IDM.ps1 | iex
 
-$repoUrl = "https://raw.githubusercontent.com/SEU_USUARIO/IDM-Activation-Script-PTBR/main"
+$repoUrl = "https://raw.githubusercontent.com/brodrigues0ll/Ativador-IDM/main"
 
 # Solicitar permissoes de administrador se necessario
 if (!([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]"Administrator")) {
     Write-Host "Solicitando permissoes de administrador..." -ForegroundColor Yellow
-    Start-Process powershell.exe -ArgumentList "-NoProfile -NoExit -ExecutionPolicy Bypass -Command `"irm '$repoUrl/Ativar-IDM.ps1' | iex`"" -Verb RunAs
+    Start-Process powershell.exe -ArgumentList "-NoProfile -NoExit -ExecutionPolicy Bypass -Command `"irm 'https://raw.githubusercontent.com/brodrigues0ll/Ativador-IDM/main/Ativar-IDM.ps1' | iex`"" -Verb RunAs
     exit
 }
 
