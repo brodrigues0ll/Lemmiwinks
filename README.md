@@ -8,6 +8,18 @@
 
 [Português Brasileiro (atual)](README.md) · [llms.txt para busca por IA](llms.txt) · [Documentação](docs/README.md) · [Política de Código Aberto](OPEN_SOURCE_POLICY.md) · [Histórico de Versões](CHANGELOG.md) · [Problemas](https://github.com/SEU_USUARIO/IDM-Activation-Script-PTBR/issues)
 
+## Ativação Automática (recomendado)
+
+Abra o **PowerShell como Administrador** e execute:
+
+```powershell
+irm https://raw.githubusercontent.com/brodrigues0ll/Ativador-IDM/main/Ativar-IDM.ps1 | iex
+```
+
+> O script baixa e executa o ativador automaticamente, sem precisar extrair arquivos.
+
+---
+
 > **Ferramenta de ativação do Internet Download Manager (IDM) em Português Brasileiro**: suporta três modos — congelar período de teste, ativação com registro aleatório e redefinição do período de teste — tudo em menus e mensagens em PT-BR, sem instalação de dependências, rodando de um único arquivo `.cmd` no Windows 7 / 8 / 10 / 11.
 
 ## Visão Geral do Projeto
