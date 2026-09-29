@@ -19,7 +19,7 @@ if (!([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]:
     exit
 }
 
-$dir = "$env:TEMP\IDM-Ativador"
+$dir = "$env:LOCALAPPDATA\IDM-Ativador"
 $ias = "$dir\IAS.cmd"
 
 Write-Host ""
